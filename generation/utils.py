@@ -4,13 +4,15 @@ from typing import Optional
 
 import json
 from datasets import Dataset
-def load_json(file_path,is_min=True):
+def load_json(file_path,name,is_min=False):
     results={'summarization':[],'article':[]}
     with open(file_path,encoding='utf-8') as f:
         content=json.load(f)
         if is_min:
             content = content[:100]
         for sample in content:
+            if 'test' not in name and sample['summarization'].strip()=='':continue 
+            if sample['article'].strip()=='':continue
             results['summarization'].append(sample['summarization'])
             results['article'].append(sample['article'])
         results=Dataset.from_dict(results)

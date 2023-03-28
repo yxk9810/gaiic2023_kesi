@@ -87,8 +87,8 @@ if data_args.validation_file is not None:
 if data_args.test_file is not None:
     data_files["test"] = data_args.test_file
 for key in data_files:
-    print(key)
-    datasets[key]=load_json(data_files[key])
+    # print(key)
+    datasets[key]=load_json(data_files[key],key)
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
