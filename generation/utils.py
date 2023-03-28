@@ -4,10 +4,12 @@ from typing import Optional
 
 import json
 from datasets import Dataset
-def load_json(file_path):
+def load_json(file_path,is_min=True):
     results={'summarization':[],'article':[]}
     with open(file_path,encoding='utf-8') as f:
         content=json.load(f)
+        if is_min:
+            content = content[:100]
         for sample in content:
             results['summarization'].append(sample['summarization'])
             results['article'].append(sample['article'])
