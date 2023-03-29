@@ -177,10 +177,10 @@ if training_args.do_predict:
     )
 
 
-max_eval_num=30000
-if eval_dataset and len(eval_dataset)>max_eval_num:
-    eval_dataset=Dataset.from_dict(eval_dataset[:max_eval_num])
-print(len(eval_dataset))
+# max_eval_num=30000
+# if eval_dataset and len(eval_dataset)>max_eval_num:
+#     eval_dataset=Dataset.from_dict(eval_dataset[:max_eval_num])
+# print(len(eval_dataset))
 
 
 # Data collator
