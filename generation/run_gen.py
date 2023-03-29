@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model_path",default='/path/to/model',type=str)
 parser.add_argument("--dataset", default="csl",type=str)
 parser.add_argument("--lr",default=2e-5,type=float)
-parser.add_argument("--batch_size",default='50',type=str)
+parser.add_argument("--batch_size",default='32',type=str)
 parser.add_argument("--epoch",default='5',type=str)
 parser.add_argument("--data_dir",default="/path/to/dataset/",type=str)
 args = parser.parse_args()
@@ -108,7 +108,10 @@ if is_main_process(training_args.local_rank):
 logger.info("Training/evaluation parameters %s", training_args)
 
 tokenizer=BertTokenizer.from_pretrained(model_args.model_name_or_path)
-model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+if 'bart' not in model_args.model_name_or_path:
+    model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+else:
+    model = BartForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 model.config.max_length=data_args.val_max_target_length
 
 text_column='article'
