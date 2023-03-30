@@ -109,7 +109,7 @@ if is_main_process(training_args.local_rank):
 logger.info("Training/evaluation parameters %s", training_args)
 
 tokenizer=BertTokenizer.from_pretrained(model_args.model_name_or_path)
-if 'bart' not in model_args.model_name_or_path:
+if False:
     model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 else:
     model = BartForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
