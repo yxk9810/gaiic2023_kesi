@@ -20,6 +20,7 @@ from transformers import BartForConditionalGeneration
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from modeling_cpt import CPTModel, CPTForConditionalGeneration
+from transformers  import BartForConditionalGeneration
 
 
 parser = argparse.ArgumentParser()
@@ -108,7 +109,10 @@ if is_main_process(training_args.local_rank):
 logger.info("Training/evaluation parameters %s", training_args)
 
 tokenizer=BertTokenizer.from_pretrained(model_args.model_name_or_path)
-model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+if 'bart' not in model_args.model_name_or_path:
+    model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+else:
+    model = BartForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 model.config.max_length=data_args.val_max_target_length
 
 text_column='article'
