@@ -5,7 +5,7 @@ import os
 import random
 import sys
 import nltk
-
+os.environ["WANDB_DISABLED"] = "true"
 
 import numpy as np
 import torch
