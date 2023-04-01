@@ -107,12 +107,12 @@ if is_main_process(training_args.local_rank):
     transformers.utils.logging.set_verbosity_info()
 logger.info("Training/evaluation parameters %s", training_args)
 
-tokenizer=AutoTokenizer.from_pretrained(model_args.model_name_or_path)
+tokenizer=AutoTokenizer.from_pretrained(model_args.model_name_or_path,trust_remote_code=True)
 if 'cpt'  in model_args.model_name_or_path:
     pass
 #     model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 elif 'THUDM' in model_args.model_name_or_path:
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_name_or_path)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_name_or_path,trust_remote_code=True)
 else:
     model = BartForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 model.config.max_length=data_args.val_max_target_length
