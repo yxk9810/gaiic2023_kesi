@@ -12,7 +12,7 @@ import torch
 import transformers
 from transformers import (AutoConfig, AutoModel, BertTokenizer,BertForTokenClassification,
                           DataCollatorForTokenClassification, HfArgumentParser,DataCollatorForSeq2Seq,Seq2SeqTrainer,
-                          Seq2SeqTrainingArguments, Trainer, TrainerCallback,AutoModelForSeq2SeqLM)
+                          Seq2SeqTrainingArguments, Trainer, TrainerCallback,AutoModelForSeq2SeqLM,AutoTokenizer)
 from transformers.trainer_utils import is_main_process
 from datasets import load_metric,Dataset
 from utils import DataTrainingArguments, ModelArguments, load_json
@@ -107,9 +107,11 @@ if is_main_process(training_args.local_rank):
     transformers.utils.logging.set_verbosity_info()
 logger.info("Training/evaluation parameters %s", training_args)
 
-tokenizer=BertTokenizer.from_pretrained(model_args.model_name_or_path)
+tokenizer=AutoTokenizer.from_pretrained(model_args.model_name_or_path)
 if 'bart' not in model_args.model_name_or_path:
     model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+elif 'THUDM' in model_args.model_name_or_path:
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_name_or_path)
 else:
     model = BartForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 model.config.max_length=data_args.val_max_target_length
