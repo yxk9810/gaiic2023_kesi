@@ -19,7 +19,7 @@ from utils import DataTrainingArguments, ModelArguments, load_json
 from transformers import BartForConditionalGeneration
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-from modeling_cpt import CPTModel, CPTForConditionalGeneration
+# from modeling_cpt import CPTModel, CPTForConditionalGeneration
 
 
 parser = argparse.ArgumentParser()
@@ -108,8 +108,9 @@ if is_main_process(training_args.local_rank):
 logger.info("Training/evaluation parameters %s", training_args)
 
 tokenizer=AutoTokenizer.from_pretrained(model_args.model_name_or_path)
-if 'bart' not in model_args.model_name_or_path:
-    model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
+if 'cpt'  in model_args.model_name_or_path:
+    pass
+#     model=CPTForConditionalGeneration.from_pretrained(model_args.model_name_or_path)
 elif 'THUDM' in model_args.model_name_or_path:
     model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_name_or_path)
 else:
